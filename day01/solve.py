@@ -9,13 +9,14 @@ def elf_generator(lines):
 
 
 def solve():
-    lines_gen = (line for line in open('adventofcode.com_2022_day_1_input.txt', 'r'))
-    elf_gen = elf_generator(lines_gen)
+    with open('adventofcode.com_2022_day_1_input.txt', 'r') as fd:
+        lines_gen = (line for line in fd)
+        elf_gen = elf_generator(lines_gen)
 
-    max = 0
-    for compared in elf_generator(lines_gen):
-        if compared > max:
-            max = compared
+        max = 0
+        for compared in elf_generator(lines_gen):
+            if compared > max:
+                max = compared
     print(f"Biggest elf calories is {max}")
     
 
