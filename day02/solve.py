@@ -1,25 +1,30 @@
 from pathlib import Path
 
-def calculate(line):
-    shape ={'X':1, 'Y':2, 'Z':3}
-    win_combination = ['AY', 'BZ', 'CX']
-    draw_combination = ['AX', 'BY', 'CZ']
-    lost_combination = ['AZ', 'BX', 'CY']
-    opponent, me = line.strip().split(' ')
-    combination = opponent + me
-    if combination in win_combination:
-        score = 6
-    elif combination in draw_combination:
-        score = 3
-    elif combination in lost_combination:
-        score = 0
+ROCK = 1
+PAPER = 2
+SCISSORS = 3
+WON = 6
+DRAW = 3
+LOST = 0
+
+def round_result(opponent, you):
+    if opponent == you:
+        return DRAW
+    elif you - opponent == 1 or you - opponent == -2:
+        return WON
+    elif you - opponent == -1 or you - opponent == 2:
+        return LOST
     else:
         raise Exception("Wrong input")
-        
-    return score + shape[me]
-    
-    
-    
+
+def calculate(line):
+    input1, input2 = line.strip().split(' ')
+    opponent_strategy = {'A': ROCK, 'B':PAPER, 'C':SCISSORS}
+    you_strategy = {'X': ROCK, 'Y':PAPER, 'Z':SCISSORS}
+    opponent = opponent_strategy[input1]
+    you = you_strategy[input2]
+    result = round_result(opponent, you)
+    return result + you
 
 def solve():
     with open(Path(__file__).with_name('adventofcode.com_2022_day_2_input.txt'), 'r') as fd:
