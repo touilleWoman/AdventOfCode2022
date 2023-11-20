@@ -38,14 +38,18 @@ def grep_instructions(line):
         raise ValueError("Wrong instruction line")
 
 
-def main():
+def main(part_two=False):
     crates_lines, nb_of_stacks, instructions = parse()
     stacks = build_stacks(crates_lines, nb_of_stacks)
     for line in instructions:
         nb_of_crates, from_stack, to_stack = grep_instructions(line)
         unmoved, moved = stacks[from_stack - 1][:-nb_of_crates], stacks[from_stack - 1][-nb_of_crates:]
         stacks[from_stack - 1] = unmoved
-        stacks[to_stack - 1] += ''.join(reversed(moved))
+        if part_two == False:
+            stacks[to_stack - 1] += ''.join(reversed(moved))
+        else:
+            stacks[to_stack - 1] += moved
+            
     ends_of_crates = ''
     for line in stacks:
         ends_of_crates += line[-1]
@@ -55,3 +59,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    main(part_two=True)
